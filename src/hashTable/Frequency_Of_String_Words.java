@@ -1,35 +1,41 @@
 package hashTable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Frequency_Of_String_Words {
-    static void largeCount_freq(String str) {
-        Map<String, Integer> mp = new TreeMap<>();
-        String arr[] = str.split(" ");
-        for (int i = 0; i < arr.length; i++) {
-            if (mp.containsKey(arr[i])) {
-                mp.put(arr[i], mp.get(arr[i]) + 1);
-            } else {
-                mp.put(arr[i], 1);
-            }
-        }
-        for (Map.Entry<String, Integer> entry :
-                mp.entrySet()) {
-            System.out.println(entry.getKey() +
-                    " - " + entry.getValue());
-        }
-    }
-
     public static void main(String[] args) {
-        System.out.println(" checking large paragraph of frequency : -");
-        String string = "“Paranoids are not\n" +
+
+
+        String a = "“Paranoids are not\n" +
                 "paranoid because they are paranoid but\n" +
                 "because they keep putting themselves\n" +
                 "deliberately into paranoid avoidable\n" +
-                "situations”\n" +
-                "- Use hashcode to find index of the words in the para";
-
-        largeCount_freq(string);
+                "situations”\n";
+        System.out.println(removeOneDuplicate(a));
     }
+
+    public static String removeOneWord(String str, String word) {
+        int value = str.indexOf(word);
+        String result = str.substring(0, value);
+        result += str.substring(value + word.length(), str.length());
+        return result;
+    }
+
+    public static String removeOneDuplicate(String a) {
+        String[] tmp = a.split(" ");
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (String s : tmp) {
+            if (map.containsKey(s)) {
+                int value = map.get(s);
+                if (value == 1)
+                    a = removeOneWord(a, s);
+                map.put(s, value + 1);
+            } else
+                map.put(s, 1);
+        }
+        return a;
+    }
+
 }
